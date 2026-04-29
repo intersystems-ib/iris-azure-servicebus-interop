@@ -10,8 +10,3 @@ https://learn.microsoft.com/en-us/azure/service-bus-messaging/service-bus-python
 PEX
 https://docs.intersystems.com/iris20261/csp/docbook/DocBook.UI.Page.cls?KEY=EPEX_intro_workflow
 
-
-
-Name ideas:
-iris-azure-servicebus
-iris-azure-interop

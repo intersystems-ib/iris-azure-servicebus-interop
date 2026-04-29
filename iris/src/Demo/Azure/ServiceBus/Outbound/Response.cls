@@ -1,4 +1,5 @@
-Class Demo.Azure.ServiceBus.Response Extends Ens.Response
+/// Outbound BO response containing the send status returned by the Azure SDK call.
+Class Demo.Azure.ServiceBus.Outbound.Response Extends Ens.Response
 {
 
 Property Status As %String(MAXLEN = 50);

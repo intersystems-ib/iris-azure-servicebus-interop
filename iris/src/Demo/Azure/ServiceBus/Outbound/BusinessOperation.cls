@@ -1,4 +1,5 @@
-Class Demo.Azure.ServiceBus.BusinessOperation Extends Ens.BusinessOperation
+/// Sends JSON messages from IRIS to an Azure Service Bus queue using embedded Python.
+Class Demo.Azure.ServiceBus.Outbound.BusinessOperation Extends Ens.BusinessOperation
 {
 
 Parameter ADAPTER = "";
@@ -50,31 +51,23 @@ Method OnTearDown() As %Status
     quit sc
 }
 
-// Serialize the request payload and delegate the actual send to Python.
+// Send one outbound request body and map request metadata to Service Bus properties.
 Method OnMessage(
-    request As Demo.Azure.ServiceBus.Request,
-    Output response As Demo.Azure.ServiceBus.Response) As %Status
+    request As Demo.Azure.ServiceBus.Outbound.Request,
+    Output response As Demo.Azure.ServiceBus.Outbound.Response) As %Status
 {
     #dim sc As %Status = $$$OK
-    #dim body As %String
 
     try {
-        if '$isobject(request.Message) {
-            set sc = $$$ERROR($$$GeneralError, "Request.Message is required")
-            quit
-        }
-        // Serialize the payload object to the JSON body sent to Service Bus.
-        set sc = request.Message.%JSONExportToString(.body)
-        quit:$$$ISERR(sc)
-        set response = ##class(Demo.Azure.ServiceBus.Response).%New()
+        set response = ##class(Demo.Azure.ServiceBus.Outbound.Response).%New()
         set response.RawResponseJSON = ..PySendMessage(
-            body,
-            request.Message.MessageId,
-            request.Message.CorrelationId,
-            request.Message.Subject,
+            request.Body,
+            request.MessageId,
+            request.CorrelationId,
+            request.Subject,
             request.ApplicationPropertiesJSON)
         set response.Status = "sent"
-        set response.MessageId = request.Message.MessageId
+        set response.MessageId = request.MessageId
     } catch ex {
         set sc = ex.AsStatus()
     }
@@ -105,7 +98,7 @@ Method PyInit(connectionString As %String, queueName As %String) [ Language = py
     self.InitializedQueueName = queue_name
 }
 
-// Send one JSON message using the sender cached during OnInit().
+// Send one message using the sender cached during OnInit().
 Method PySendMessage(
     body As %String,
     messageId As %String,
