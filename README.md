@@ -294,8 +294,6 @@ For the passwordless service principal option, see:
   https://docs.intersystems.com/irislatest/csp/docbook/DocBook.UI.Page.cls?KEY=GEPYTHON_productions
 - Run Python from IRIS:
   https://docs.intersystems.com/irislatest/csp/docbook/DocBook.UI.Page.cls?KEY=GEPYTHON_runpython
-- PEX introduction:
-  https://docs.intersystems.com/irislatest/csp/docbook/DocBook.UI.Page.cls?KEY=EPEX_intro_workflow
 
 * * *
 
