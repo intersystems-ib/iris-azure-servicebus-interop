@@ -9,13 +9,10 @@
     do $SYSTEM.OBJ.LoadDir("/opt/irisapp/src", "ck", ,1)
 
     // start production
-    //set production = "clinicalai.ClinicalEventOrchestration"
-    //set ^Ens.Configuration("csp","LastProduction") = production
-    //do ##class(Ens.Director).SetAutoStart(production)
+    set production = "Demo.Production"
+    set ^Ens.Configuration("csp","LastProduction") = production
+    do ##class(Ens.Director).SetAutoStart(production)
 
     set $namespace = "%SYS"
-    
-    // import ssl config
-    //do ##class(Security.SSLConfigs).Import("/opt/irisapp/init/llm_ssl.xml")
     
     halt
